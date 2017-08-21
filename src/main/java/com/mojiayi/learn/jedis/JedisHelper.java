@@ -8,9 +8,6 @@ import redis.clients.jedis.JedisPool;
 public class JedisHelper {
     private static final char DELIMITER = ':';
 
-    protected String storeValueKey = "key-value";
-    protected String storeKeyKey = "value-key";
-
     /**
      * 连接池对象
      */
@@ -20,7 +17,6 @@ public class JedisHelper {
      * 对应的应用系统名
      * */
     protected String appName;
-
 
     /**
      * 对应的数据范围
@@ -39,8 +35,8 @@ public class JedisHelper {
         this.dataScope = dataScope;
     }
 
-    public String createStringKey(String app, String jedisFrame,String userFor,String storeType,String key) {
-        return createKey(app,jedisFrame,userFor,storeType,key);
+    public String createKey(String app, String jedisFrame,String userFor,String key) {
+        return createKey(app,jedisFrame,userFor,key);
     }
 
     private String createKey(String ... keyItems){
@@ -50,11 +46,11 @@ public class JedisHelper {
 
     private void keyItemsCheck(String ... keyItems) {
         if (ArrayUtils.isEmpty(keyItems)) {
-            throw new IllegalKeyItemException("key组成项不能为空");
+            throw new IllegalKeyItemException("key items list is empty");
         }
         for (String item : keyItems) {
             if(StringUtils.isAnyBlank(item)){
-                throw new IllegalKeyItemException("key组成项不能包含空白,keyItems=" + StringUtils.join(keyItems, DELIMITER));
+                throw new IllegalKeyItemException("key item can not be empty or null,keyItems=" + StringUtils.join(keyItems, DELIMITER));
             }
         }
     }
