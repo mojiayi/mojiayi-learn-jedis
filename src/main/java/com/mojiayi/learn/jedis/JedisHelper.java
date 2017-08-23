@@ -39,7 +39,7 @@ public class JedisHelper {
         return createKey(app, jedisFrame, userFor, key);
     }
 
-    private String createKey(String... keyItems) {
+    public String createKey(String... keyItems) {
         keyItemsCheck(keyItems);
         return StringUtils.join(keyItems, DELIMITER);
     }
