@@ -15,7 +15,7 @@ public class JedisHelper {
 
     /**
      * 对应的应用系统名
-     * */
+     */
     protected String appName;
 
     /**
@@ -35,21 +35,21 @@ public class JedisHelper {
         this.dataScope = dataScope;
     }
 
-    public String createKey(String app, String jedisFrame,String userFor,String key) {
-        return createKey(app,jedisFrame,userFor,key);
+    public String createKey(String app, String jedisFrame, String userFor, String key) {
+        return createKey(app, jedisFrame, userFor, key);
     }
 
-    private String createKey(String ... keyItems){
+    private String createKey(String... keyItems) {
         keyItemsCheck(keyItems);
         return StringUtils.join(keyItems, DELIMITER);
     }
 
-    private void keyItemsCheck(String ... keyItems) {
+    private void keyItemsCheck(String... keyItems) {
         if (ArrayUtils.isEmpty(keyItems)) {
             throw new IllegalKeyItemException("key items list is empty");
         }
         for (String item : keyItems) {
-            if(StringUtils.isAnyBlank(item)){
+            if (StringUtils.isAnyBlank(item)) {
                 throw new IllegalKeyItemException("key item can not be empty or null,keyItems=" + StringUtils.join(keyItems, DELIMITER));
             }
         }
