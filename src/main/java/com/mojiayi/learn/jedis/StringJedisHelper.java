@@ -33,7 +33,7 @@ public class StringJedisHelper extends JedisHelper {
             jedis = jedisPool.getResource();
             jedis.set(actualKey, value);
             jedis.expire(actualKey, seconds);
-            return true;
+            return Boolean.TRUE;
         } catch (Exception e) {
             jedisPool.returnBrokenResource(jedis);
             throw new DataStoreGetException(String.format("failed to save %s->%s", key, value), e);
@@ -76,7 +76,7 @@ public class StringJedisHelper extends JedisHelper {
         try {
             jedis = jedisPool.getResource();
             jedis.expire(actualKey, seconds);
-            return true;
+            return Boolean.TRUE;
         } catch (Exception e) {
             jedisPool.returnBrokenResource(jedis);
             throw new DataStoreGetException(String.format("failed to expiry key=%s", key), e);
