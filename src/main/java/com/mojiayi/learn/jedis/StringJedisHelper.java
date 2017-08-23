@@ -20,16 +20,19 @@ public class StringJedisHelper extends JedisHelper {
      * store key-value pair,set expiry as specified value
      * @param key
      * @param value
-     * @param expiry
+     * @param seconds
      * @return
      */
-    public boolean set(String key, String value, int expiry) {
+    public boolean set(String key, String value, int seconds) {
+        if (seconds < 0) {
+            throw new DataStoreGetException(String.format("expiry seconds can not be negative number,seconds=%d", seconds));
+        }
         Jedis jedis = null;
         try {
             String actualKey = createKey(appName, DATA_TYPE, dataScope, key);
             jedis = jedisPool.getResource();
             jedis.set(actualKey, value);
-            jedis.expire(actualKey, expiry);
+            jedis.expire(actualKey, seconds);
             return true;
         } catch (Exception e) {
             jedisPool.returnBrokenResource(jedis);
@@ -65,8 +68,8 @@ public class StringJedisHelper extends JedisHelper {
      * @return
      */
     public boolean expire(String key, int seconds) {
-        if (seconds > 0) {
-            throw new DataStoreGetException(String.format("expiry must larger than zero,seconds=%d", seconds));
+        if (seconds < 0) {
+            throw new DataStoreGetException(String.format("expiry seconds can not be negative number,seconds=%d", seconds));
         }
         Jedis jedis = null;
         String actualKey = createKey(appName, DATA_TYPE, dataScope, key);
