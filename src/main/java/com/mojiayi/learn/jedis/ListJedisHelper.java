@@ -45,7 +45,7 @@ public class ListJedisHelper extends JedisHelper {
     }
 
     public boolean clearAll(String key) {
-        return ltrim(key, 0, -1);
+        return ltrim(key, 1, 0);
     }
 
     public boolean ltrim(String key, int start, int end) {
